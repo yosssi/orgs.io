@@ -32,5 +32,5 @@ func main() {
 		panic(err)
 	}
 
-	log.Panic(http.ListenAndServe(":"+config.ServerConfig.Port, router.New()))
+	log.Panic(http.ListenAndServe(":"+config.Server.Port, router.New(config)))
 }
