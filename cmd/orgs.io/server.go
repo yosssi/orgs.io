@@ -2,10 +2,13 @@ package main
 
 import (
 	"flag"
+	"io/ioutil"
 	"log"
 	"net/http"
 
+	"github.com/yosssi/orgs.io/models"
 	"github.com/yosssi/orgs.io/router"
+	"gopkg.in/yaml.v1"
 )
 
 func main() {
@@ -18,5 +21,16 @@ func main() {
 		panic("config file path is not specified")
 	}
 
-	log.Panic(http.ListenAndServe(":8080", router.New()))
+	data, err := ioutil.ReadFile(*configPath)
+	if err != nil {
+		panic(err)
+	}
+
+	config := &models.Config{}
+
+	if err := yaml.Unmarshal(data, config); err != nil {
+		panic(err)
+	}
+
+	log.Panic(http.ListenAndServe(":"+config.ServerConfig.Port, router.New()))
 }
