@@ -1,4 +1,1 @@
-orgs.io
-=======
-
-Wep application for organizing bookmarks
+# Orgs.io - Wep application for organizing bookmarks
