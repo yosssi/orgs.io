@@ -5,7 +5,7 @@ import (
 
 	"github.com/julienschmidt/httprouter"
 	"github.com/yosssi/ace-proxy"
-	"github.com/yosssi/orgs.io/models"
+	"github.com/yosssi/orgs.io/app/models"
 )
 
 // Top represents a top controller.

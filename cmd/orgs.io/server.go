@@ -6,8 +6,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/yosssi/orgs.io/models"
-	"github.com/yosssi/orgs.io/router"
+	"github.com/yosssi/orgs.io/app/models"
+	"github.com/yosssi/orgs.io/app/router"
 	"gopkg.in/yaml.v1"
 )
 
