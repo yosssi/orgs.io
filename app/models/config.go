@@ -1,5 +1,11 @@
 package models
 
+import (
+	"io/ioutil"
+
+	"gopkg.in/yaml.v1"
+)
+
 // Env consts
 const (
 	envDevelopment = "development"
@@ -12,6 +18,35 @@ const (
 type Config struct {
 	App    AppConfig    `yaml:"app"`
 	Server ServerConfig `yaml:"server"`
+}
+
+// NewConfig parses the configuration file,
+// creates and returns a config.
+func NewConfig(flags *Flags) (<-chan *Config, <-chan error) {
+	configc := make(chan *Config)
+	errc := make(chan error)
+	go newConfig(flags, configc, errc)
+	return configc, errc
+}
+
+// newConfig parses the configuration file,
+// creates and returns a config.
+func newConfig(flags *Flags, configc chan<- *Config, errc chan<- error) {
+	// Read the configuration file.
+	data, err := ioutil.ReadFile(flags.ConfigFilePath)
+	if err != nil {
+		errc <- err
+		return
+	}
+
+	// Parse the configuration file.
+	config := &Config{}
+	if err := yaml.Unmarshal(data, config); err != nil {
+		errc <- err
+		return
+	}
+
+	configc <- config
 }
 
 // AppConfig represents a configuration for the application
