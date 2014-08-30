@@ -26,6 +26,7 @@ build:
         name: go test
         code: |
           go test -cover ./...
+
     # Invoke goveralls
     - script:
         name: goveralls
