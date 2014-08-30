@@ -10,11 +10,13 @@ import (
 	"github.com/yosssi/orgs.io/app/models"
 )
 
+const aceBaseDir = "app/views"
+
 // New creates and returns a router.
 func New(config *models.Config) http.Handler {
 	// Create an Ace proxy.
 	aceProxy := proxy.New(&ace.Options{
-		BaseDir:       "app/views",
+		BaseDir:       aceBaseDir,
 		DynamicReload: config.App.Development(),
 	})
 
