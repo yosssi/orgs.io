@@ -6,7 +6,9 @@ import (
 	"testing"
 )
 
-var configFilePath = "test.yaml"
+var (
+	configFilePath = "test.yaml"
+)
 
 func TestNewFlags_configFilePathNotSpecified(t *testing.T) {
 	resetForTesting(nil)
@@ -16,11 +18,11 @@ func TestNewFlags_configFilePathNotSpecified(t *testing.T) {
 	flags, err := NewFlags()
 
 	if flags != nil {
-		t.Error("flags should be nil [actual: %v]", flags)
+		t.Errorf("flags should be nil [actual: %v]", flags)
 	}
 
 	if err != ErrConfigFilePathNotSpecified {
-		t.Error("err should be %v [actual: %v]", ErrConfigFilePathNotSpecified, err)
+		t.Errorf("err should be %v [actual: %v]", ErrConfigFilePathNotSpecified, err)
 	}
 }
 
@@ -37,11 +39,11 @@ func TestNewFlags_noErrorOccurs(t *testing.T) {
 	}
 
 	if flags.ConfigFilePath != configFilePath {
-		t.Error("flags.ConfigFilePath should be %v [actual: %v]", configFilePath, flags.ConfigFilePath)
+		t.Errorf("flags.ConfigFilePath should be %v [actual: %v]", configFilePath, flags.ConfigFilePath)
 	}
 
 	if err != nil {
-		t.Error("err should be %v [actual: %v]", ErrConfigFilePathNotSpecified, err)
+		t.Errorf("err should be %v [actual: %v]", ErrConfigFilePathNotSpecified, err)
 	}
 }
 
