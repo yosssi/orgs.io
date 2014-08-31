@@ -1,0 +1,11 @@
+= doctype html
+html lang=en
+  head
+    meta charset=UTF-8
+    meta content="width=device-width, initial-scale=1" name=viewport
+    title Orgs.io - Wep application for organizing bookmarks
+    = include layout/style
+  body
+    = include layout/header
+    = include layout/body
+    = include layout/script

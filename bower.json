@@ -1,0 +1,13 @@
+{
+  "name": "Orgs.io",
+  "version": "0.0.1",
+  "homepage": "https://github.com/yosssi/orgs.io",
+  "description": "Wep application for organizing bookmarks",
+  "authors": [
+    "Keiji Yoshida"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "~3.2.0"
+  }
+}

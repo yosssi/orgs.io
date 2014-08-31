@@ -1,0 +1,5 @@
+.navbar.navbar-inverse.navbar-fixed-top role=navigation
+  .container
+    .navbar-header
+      a.navbar-brand href=/ Orgs.io
+    .collapse.navbar-collapse

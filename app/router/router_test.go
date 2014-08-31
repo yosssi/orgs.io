@@ -8,7 +8,9 @@ import (
 
 func TestNew(t *testing.T) {
 	config := &models.Config{
-		App:    models.AppConfig{},
+		App: models.AppConfig{
+			Env: models.EnvDevelopment,
+		},
 		Server: models.ServerConfig{},
 	}
 

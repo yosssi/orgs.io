@@ -91,14 +91,14 @@ func Test_newConfig(t *testing.T) {
 
 func TestAppConfig_Development(t *testing.T) {
 	appConfig := &AppConfig{
-		Env: envDevelopment,
+		Env: EnvDevelopment,
 	}
 
 	if !appConfig.Development() {
 		t.Error("appConfig.Development() should be true")
 	}
 
-	appConfig.Env = envTest
+	appConfig.Env = EnvTest
 
 	if appConfig.Development() {
 		t.Error("appConfig.Development() should be false")
@@ -107,14 +107,14 @@ func TestAppConfig_Development(t *testing.T) {
 
 func TestAppConfig_Test(t *testing.T) {
 	appConfig := &AppConfig{
-		Env: envTest,
+		Env: EnvTest,
 	}
 
 	if !appConfig.Test() {
 		t.Error("appConfig.Test() should be true")
 	}
 
-	appConfig.Env = envDevelopment
+	appConfig.Env = EnvDevelopment
 
 	if appConfig.Test() {
 		t.Error("appConfig.Test() should be false")
@@ -123,14 +123,14 @@ func TestAppConfig_Test(t *testing.T) {
 
 func TestAppConfig_Staging(t *testing.T) {
 	appConfig := &AppConfig{
-		Env: envStaging,
+		Env: EnvStaging,
 	}
 
 	if !appConfig.Staging() {
 		t.Error("appConfig.Staging() should be true")
 	}
 
-	appConfig.Env = envDevelopment
+	appConfig.Env = EnvDevelopment
 
 	if appConfig.Staging() {
 		t.Error("appConfig.Staging() should be false")
@@ -139,14 +139,14 @@ func TestAppConfig_Staging(t *testing.T) {
 
 func TestAppConfig_Production(t *testing.T) {
 	appConfig := &AppConfig{
-		Env: envProduction,
+		Env: EnvProduction,
 	}
 
 	if !appConfig.Production() {
 		t.Error("appConfig.Production() should be true")
 	}
 
-	appConfig.Env = envDevelopment
+	appConfig.Env = EnvDevelopment
 
 	if appConfig.Production() {
 		t.Error("appConfig.Production() should be false")

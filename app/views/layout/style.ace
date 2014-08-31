@@ -1,0 +1,5 @@
+{{if config.App.Development}}
+  link href=/bower_components/bootstrap/dist/css/bootstrap.css media=all rel=stylesheet
+  link href=/assets/stylesheets/application.css media=all rel=stylesheet
+{{else}}
+{{end}}

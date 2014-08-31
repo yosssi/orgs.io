@@ -1,6 +1,7 @@
 package router
 
 import (
+	"html/template"
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
@@ -18,6 +19,11 @@ func New(config *models.Config) http.Handler {
 	aceProxy := proxy.New(&ace.Options{
 		BaseDir:       aceBaseDir,
 		DynamicReload: config.App.Development(),
+		FuncMap: template.FuncMap{
+			"config": func() *models.Config {
+				return config
+			},
+		},
 	})
 
 	// Create controllers.
@@ -27,6 +33,11 @@ func New(config *models.Config) http.Handler {
 	router := httprouter.New()
 
 	router.GET("/", top.Index)
+
+	if config.App.Development() {
+		router.ServeFiles("/bower_components/*filepath", http.Dir("bower_components"))
+		router.ServeFiles("/assets/*filepath", http.Dir("app/assets"))
+	}
 
 	return router
 }

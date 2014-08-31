@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"runtime"
 
 	"github.com/yosssi/orgs.io/app/models"
 	"github.com/yosssi/orgs.io/app/router"
@@ -22,13 +23,28 @@ func main() {
 
 	// Read and parse the configuration file.
 	configc, errc := models.NewConfig(flags)
+
 	var config *models.Config
+
 	select {
 	case config = <-configc:
 	case err := <-errc:
 		logPanic(err)
 		return
 	}
+
+	// Set the maximum number of CPUs.
+	cpus := config.Server.CPUs
+	localCPUs := runtime.NumCPU()
+
+	switch {
+	case cpus < 1:
+		cpus = 1
+	case localCPUs < cpus:
+		cpus = localCPUs
+	}
+
+	runtime.GOMAXPROCS(cpus)
 
 	logPanic(listenAndServe(":"+config.Server.Port, router.New(config)))
 }

@@ -8,10 +8,10 @@ import (
 
 // Env consts
 const (
-	envDevelopment = "development"
-	envTest        = "test"
-	envStaging     = "staging"
-	envProduction  = "production"
+	EnvDevelopment = "development"
+	EnvTest        = "test"
+	EnvStaging     = "staging"
+	EnvProduction  = "production"
 )
 
 // Config represents a configuration for Orgs.io.
@@ -56,25 +56,26 @@ type AppConfig struct {
 
 // Development returns true if the Env == envDevelopment.
 func (app *AppConfig) Development() bool {
-	return app.Env == envDevelopment
+	return app.Env == EnvDevelopment
 }
 
 // Test returns true if the Env == envTest.
 func (app *AppConfig) Test() bool {
-	return app.Env == envTest
+	return app.Env == EnvTest
 }
 
 // Staging returns true if the Env == envStaging.
 func (app *AppConfig) Staging() bool {
-	return app.Env == envStaging
+	return app.Env == EnvStaging
 }
 
 // Production returns true if the Env == envProduction.
 func (app *AppConfig) Production() bool {
-	return app.Env == envProduction
+	return app.Env == EnvProduction
 }
 
 // ServerConfig represents a configuration for the server.
 type ServerConfig struct {
 	Port string `yaml:"port"`
+	CPUs int    `yaml:"cpus"`
 }

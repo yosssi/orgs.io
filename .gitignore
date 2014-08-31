@@ -25,3 +25,5 @@ _testmain.go
 .vagrant
 
 orgs.io.yaml
+
+bower_components
