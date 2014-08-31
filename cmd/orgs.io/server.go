@@ -10,6 +10,8 @@ import (
 
 var logPanic = log.Panic
 
+var listenAndServe = http.ListenAndServe
+
 func main() {
 	// Parse the command-line flags.
 	flags, err := models.NewFlags()
@@ -28,5 +30,5 @@ func main() {
 		return
 	}
 
-	logPanic(http.ListenAndServe(":"+config.Server.Port, router.New(config)))
+	logPanic(listenAndServe(":"+config.Server.Port, router.New(config)))
 }

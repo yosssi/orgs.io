@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"net/http"
 	"os"
 	"testing"
 )
@@ -14,6 +15,9 @@ const (
 
 func init() {
 	logPanic = func(v ...interface{}) {}
+	listenAndServe = func(addr string, handler http.Handler) error {
+		return nil
+	}
 }
 
 func Test_main_newFlagsErr(t *testing.T) {
