@@ -1,0 +1,5 @@
+app:
+  env: development
+server:
+  port: 8080
+  cpus: 2
