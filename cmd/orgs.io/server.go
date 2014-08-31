@@ -8,11 +8,14 @@ import (
 	"github.com/yosssi/orgs.io/app/router"
 )
 
+var logPanic = log.Panic
+
 func main() {
 	// Parse the command-line flags.
 	flags, err := models.NewFlags()
 	if err != nil {
-		panic(err)
+		logPanic(err)
+		return
 	}
 
 	// Read and parse the configuration file.
@@ -21,8 +24,9 @@ func main() {
 	select {
 	case config = <-configc:
 	case err := <-errc:
-		panic(err)
+		logPanic(err)
+		return
 	}
 
-	log.Panic(http.ListenAndServe(":"+config.Server.Port, router.New(config)))
+	logPanic(http.ListenAndServe(":"+config.Server.Port, router.New(config)))
 }

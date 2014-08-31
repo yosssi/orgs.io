@@ -79,7 +79,7 @@ func TestTop_Index_executeErr(t *testing.T) {
 	}
 }
 
-func TestTop_Index_noErrorOccurs(t *testing.T) {
+func TestTop_Index(t *testing.T) {
 	config := &models.Config{
 		App: models.AppConfig{
 			Env: "test",

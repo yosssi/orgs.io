@@ -6,9 +6,7 @@ import (
 	"testing"
 )
 
-var (
-	configFilePath = "test.yaml"
-)
+const configFilePath = "test.yaml"
 
 func TestNewFlags_configFilePathNotSpecified(t *testing.T) {
 	resetForTesting(nil)
@@ -26,7 +24,7 @@ func TestNewFlags_configFilePathNotSpecified(t *testing.T) {
 	}
 }
 
-func TestNewFlags_noErrorOccurs(t *testing.T) {
+func TestNewFlags(t *testing.T) {
 	resetForTesting(nil)
 
 	os.Args = []string{os.Args[0]}

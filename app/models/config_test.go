@@ -5,6 +5,7 @@ import (
 	"testing"
 )
 
+// Configuration file paths
 const (
 	configFilePathNotExist = "not_exist_file_path"
 	configFilePath1        = "test/1.yaml"
@@ -61,7 +62,7 @@ func Test_newConfig_yamlUnmarshalErr(t *testing.T) {
 	}
 }
 
-func Test_newConfig_noErrorOccurs(t *testing.T) {
+func Test_newConfig(t *testing.T) {
 	flags := &Flags{
 		ConfigFilePath: configFilePath2,
 	}
