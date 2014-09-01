@@ -4,6 +4,7 @@ import (
 	"flag"
 	"net/http"
 	"os"
+	"runtime"
 	"testing"
 )
 
@@ -40,6 +41,22 @@ func Test_main(t *testing.T) {
 	os.Args = append(os.Args, "-c", configFilePath1)
 
 	main()
+}
+
+func Test_setCPUs_less_than_one(t *testing.T) {
+	setCPUs(1)
+	expectedProcs := 1
+	if runtime.GOMAXPROCS(0) != expectedProcs {
+		t.Errorf("maximum number of CPUs should be %d", expectedProcs)
+	}
+}
+
+func Test_setCPUs_more_than_max(t *testing.T) {
+	setCPUs(256)
+	expectedProcs := runtime.NumCPU()
+	if runtime.GOMAXPROCS(0) != expectedProcs {
+		t.Errorf("maximum number of CPUs should be %d", expectedProcs)
+	}
 }
 
 // resetForTesting clears all flag state and sets the usage function as directed.

@@ -34,7 +34,13 @@ func main() {
 	}
 
 	// Set the maximum number of CPUs.
-	cpus := config.Server.CPUs
+	setCPUs(config.Server.CPUs)
+
+	logPanic(listenAndServe(":"+config.Server.Port, router.New(config)))
+}
+
+// setCPUs sets the maximum number of CPUs.
+func setCPUs(cpus int) int {
 	localCPUs := runtime.NumCPU()
 
 	switch {
@@ -44,7 +50,5 @@ func main() {
 		cpus = localCPUs
 	}
 
-	runtime.GOMAXPROCS(cpus)
-
-	logPanic(listenAndServe(":"+config.Server.Port, router.New(config)))
+	return runtime.GOMAXPROCS(cpus)
 }
