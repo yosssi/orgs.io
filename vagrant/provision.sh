@@ -45,5 +45,8 @@ npm install -g bower
 # Install Grunt CLI
 npm install -g grunt-cli
 
+# Install Stylus
+npm install -g stylus
+
 # Install PostgreSQL
 apt-get install -y postgresql postgresql-contrib
