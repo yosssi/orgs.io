@@ -16,15 +16,7 @@ const aceBaseDir = "app/views"
 // New creates and returns a router.
 func New(config *models.Config) http.Handler {
 	// Create an Ace proxy.
-	aceProxy := proxy.New(&ace.Options{
-		BaseDir:       aceBaseDir,
-		DynamicReload: config.App.Development(),
-		FuncMap: template.FuncMap{
-			"config": func() *models.Config {
-				return config
-			},
-		},
-	})
+	aceProxy := newAceProxy(config)
 
 	// Create controllers.
 	top := controllers.NewTop(config, aceProxy)
@@ -40,4 +32,17 @@ func New(config *models.Config) http.Handler {
 	}
 
 	return router
+}
+
+// newAceProxy creates and returns an Ace proxy.
+func newAceProxy(config *models.Config) *proxy.Proxy {
+	return proxy.New(&ace.Options{
+		BaseDir:       aceBaseDir,
+		DynamicReload: config.App.Development(),
+		FuncMap: template.FuncMap{
+			"config": func() *models.Config {
+				return config
+			},
+		},
+	})
 }
