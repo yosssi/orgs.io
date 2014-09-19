@@ -28,21 +28,7 @@ func New(config *models.Config) http.Handler {
 	router.GET("/", top.Index)
 
 	if config.App.Development() {
-		router.GET("/assets/*filepath", func(w http.ResponseWriter, r *http.Request, prms httprouter.Params) {
-			path := "app/assets" + prms[0].Value
-
-			if path == "app/assets/stylesheets/application.css" {
-				_, err := gcss.CompileFile(gcss.Path(path))
-
-				if err != nil {
-					http.Error(w, err.Error(), http.StatusInternalServerError)
-					return
-				}
-			}
-
-			http.ServeFile(w, r, path)
-		})
-
+		router.GET("/assets/*filepath", serveAssets)
 		router.ServeFiles("/bower_components/*filepath", http.Dir("bower_components"))
 	}
 
@@ -60,4 +46,20 @@ func newAceProxy(config *models.Config) *proxy.Proxy {
 			},
 		},
 	})
+}
+
+// serveAssets serves asset files.
+func serveAssets(w http.ResponseWriter, r *http.Request, prms httprouter.Params) {
+	path := "app/assets" + prms[0].Value
+
+	if path == "app/assets/stylesheets/application.css" {
+		_, err := gcss.CompileFile(gcss.Path(path))
+
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	}
+
+	http.ServeFile(w, r, path)
 }
