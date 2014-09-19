@@ -27,3 +27,5 @@ _testmain.go
 orgs.io.yml
 
 bower_components
+
+app/assets/stylesheets/application.css
