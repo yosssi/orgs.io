@@ -13,31 +13,22 @@ const (
 )
 
 func TestNewConfig(t *testing.T) {
-	configc, errc := NewConfig(&Flags{})
-	select {
-	case <-configc:
-	case <-errc:
-	}
+	NewConfig(&Flags{})
 }
 
-func Test_newConfig_readFileErr(t *testing.T) {
+func TestNewConfig_readFileErr(t *testing.T) {
 	flags := &Flags{
 		ConfigFilePath: configFilePathNotExist,
 	}
 
-	configc := make(chan *Config)
-	errc := make(chan error)
+	_, err := NewConfig(flags)
 
-	go newConfig(flags, configc, errc)
+	if err == nil {
+		t.Error("error should occur")
+	}
 
-	select {
-	case <-configc:
-		t.Error("an error should be returned")
-	case err := <-errc:
-		expectedErrMsg := fmt.Sprintf("open %s: no such file or directory", flags.ConfigFilePath)
-		if err.Error() != expectedErrMsg {
-			t.Errorf("err should be %q [actual: %q]", expectedErrMsg, err.Error())
-		}
+	if expectedErrMsg := fmt.Sprintf("open %s: no such file or directory", flags.ConfigFilePath); err.Error() != expectedErrMsg {
+		t.Errorf("err should be %q [actual: %q]", expectedErrMsg, err.Error())
 	}
 }
 
@@ -46,19 +37,14 @@ func Test_newConfig_yamlUnmarshalErr(t *testing.T) {
 		ConfigFilePath: configFilePath1,
 	}
 
-	configc := make(chan *Config)
-	errc := make(chan error)
+	_, err := NewConfig(flags)
 
-	go newConfig(flags, configc, errc)
+	if err == nil {
+		t.Error("error should occur")
+	}
 
-	select {
-	case <-configc:
-		t.Error("an error should be returned")
-	case err := <-errc:
-		expectedErrMsg := "YAML error: control characters are not allowed"
-		if err.Error() != expectedErrMsg {
-			t.Errorf("err should be %q [actual: %q]", expectedErrMsg, err.Error())
-		}
+	if expectedErrMsg := "YAML error: control characters are not allowed"; err.Error() != expectedErrMsg {
+		t.Errorf("err should be %q [actual: %q]", expectedErrMsg, err.Error())
 	}
 }
 
@@ -67,26 +53,21 @@ func Test_newConfig(t *testing.T) {
 		ConfigFilePath: configFilePath2,
 	}
 
-	configc := make(chan *Config)
-	errc := make(chan error)
+	config, err := NewConfig(flags)
 
-	go newConfig(flags, configc, errc)
-
-	select {
-	case config := <-configc:
-		expectedEnv := "development"
-		if config.App.Env != expectedEnv {
-			t.Errorf("config.App.Env should be %q [actual %q]", expectedEnv, config.App.Env)
-		}
-
-		expectedPort := "8080"
-		if config.Server.Port != expectedPort {
-			t.Errorf("config.Server.Port should be %q [actual %q]", expectedEnv, config.App.Env)
-		}
-	case err := <-errc:
-		t.Errorf("err should not be returned [actual: %v]", err)
+	if err != nil {
+		t.Errorf("err should not occur [error: %q]", err.Error())
 	}
 
+	expectedEnv := "development"
+	if config.App.Env != expectedEnv {
+		t.Errorf("config.App.Env should be %q [actual %q]", expectedEnv, config.App.Env)
+	}
+
+	expectedPort := "8080"
+	if config.Server.Port != expectedPort {
+		t.Errorf("config.Server.Port should be %q [actual %q]", expectedEnv, config.App.Env)
+	}
 }
 
 func TestAppConfig_Development(t *testing.T) {

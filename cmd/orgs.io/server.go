@@ -22,13 +22,9 @@ func main() {
 	}
 
 	// Read and parse the configuration file.
-	configc, errc := models.NewConfig(flags)
+	config, err := models.NewConfig(flags)
 
-	var config *models.Config
-
-	select {
-	case config = <-configc:
-	case err := <-errc:
+	if err != nil {
 		logPanic(err)
 		return
 	}
