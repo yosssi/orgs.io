@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"html/template"
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
@@ -17,13 +16,9 @@ type Top struct {
 
 // Index represents an index action.
 func (ctrl *Top) Index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	tplc, errc := ctrl.AceProxy.Load("layout/base", "top/index", nil)
+	tpl, err := ctrl.AceProxy.Load("layout/base", "top/index", nil)
 
-	var tpl *template.Template
-
-	select {
-	case tpl = <-tplc:
-	case err := <-errc:
+	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
