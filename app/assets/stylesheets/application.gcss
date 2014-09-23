@@ -1,4 +1,42 @@
 @charset "UTF-8"
 
+$transition($property, $duration)
+  -webkit-transition-property: $property
+  -webkit-transition-duration: $duration
+  -webkit-transition-timing-function: ease-in
+  -moz-transition-property: $property
+  -moz-transition-duration: $duration
+  -moz-transition-timing-function: ease-in
+  -o-transition-property: $property
+  -o-transition-duration: $duration
+  -o-transition-timing-function: ease-in
+
 body
   padding-top: 50px
+
+.navbar-inverse .navbar-brand
+  color: #fff
+
+h1.top-main-message
+  text-align: center
+  padding-top: 4rem
+  font-size: 5rem
+
+@media screen and (max-width:640px)
+  h1.top-main-message
+    font-size: 4rem
+
+.top-sign-in
+  text-align: center
+  margin-top: 6rem
+
+.btn-default
+  border-color: #000
+  &:hover
+    color: #fff
+    background-color: #000
+    border-color: #000
+
+// @media screen and (max-width:640px)
+// @media screen and (max-width: 768px)
+// @media screen and (min-width: 769px)

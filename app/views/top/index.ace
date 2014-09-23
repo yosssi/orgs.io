@@ -1,2 +1,5 @@
 = content main
-  h1 Hello!!
+  section
+    h1.top-main-message Organize your bookmarks.
+  section.top-sign-in
+    a.btn.btn-default href=/ Sign in with GitHub
